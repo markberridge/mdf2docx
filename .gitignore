@@ -8,3 +8,4 @@ pdfs/
 *.zip
 
 .DS_Store
+output.txt

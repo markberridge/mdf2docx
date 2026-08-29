@@ -601,8 +601,12 @@ def build_document(blocks, body_pt=10.0, font=FONT, page_breaks=False):
 # driver
 # --------------------------------------------------------------------------
 
+def _norm(text):
+    return re.sub(r"[\u2018\u2019]", "'", text or "")
+
+
 def _tokens(text):
-    return [t for t in re.split(r"\s+", re.sub(r"[\u2018\u2019]", "'", text or "")) if t]
+    return [t for t in re.split(r"\s+", _norm(text)) if t]
 
 
 def docx_tokens(path):
@@ -633,7 +637,7 @@ def verify(pdf_path, docx_path, dropped=()):
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
             for w in page.extract_words():
-                src[w["text"]] += 1
+                src[_norm(w["text"])] += 1
     out = Counter(docx_tokens(docx_path))
     for text in dropped:                           # repeated headers we removed
         for tok in _tokens(text):
