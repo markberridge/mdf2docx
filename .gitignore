@@ -1,0 +1,10 @@
+mdf2docx-venv/
+__pycache__/
+*.pyc
+
+docx/
+pdfs/
+*.docx
+*.zip
+
+.DS_Store
